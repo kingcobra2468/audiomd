@@ -19,8 +19,8 @@ options.set_preference("browser.helperApps.neverAsk.openFile","audio/mpeg")
 browser = webdriver.Firefox(firefox_profile=options, firefox_options=noGUI)
 browser.get('https://ytmp3.cc/')
 
-with open('/home/erik/Documents/Programming/Python/mp3Downloader/musicUrl.txt', "r") as url:
-    for Url in url:
+with open('/home/erik/Documents/Programming/Python/mp3Downloader/musicUrl.txt', "r") as urls:
+    for Url in urls:
         browser.get('https://ytmp3.cc/')
         currentWindow = browser.window_handles[0]
         url = browser.find_element_by_id('input')
