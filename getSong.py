@@ -46,6 +46,7 @@ class frameWork:
         if mode in "start":
             self.browser = webdriver.Firefox(firefox_profile=self.options, firefox_options=self.noGUI)
         else:
+            time.sleep(10)
             self.browser.close()
 
     def download(self, type):
@@ -78,7 +79,7 @@ class frameWork:
                     pass
 
 if len(sys.argv) < 2:
-    print('Input Error. Input mp3 or mp4 to conver to')
+    print('Input Error. Input mp3 or mp4 to convert to')
     exit()
 else:
     session = frameWork()
