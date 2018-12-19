@@ -18,17 +18,28 @@ class commands(threading.Thread):
         self.__readFiles()
         self.__sessionAttributes = {
             'random' : False,
+            'loop' : False,
             'pause' : lambda : self.player.pause(),
-            'play' : lambda : self.player.pause(),
+            'resume' : lambda : self.player.pause(),
             'skip' : self.__getSong,
-            'shift' : lambda sec : self.player.set_time(self.player.get_time() + (sec*1000))
+            'shift' : lambda sec : self.player.set_time(self.player.get_time() + (int(sec)*1000)),
+            'play' : lambda song : self.__findSong(song)
         }
         self.instance=vlc.Instance()
         self.player=self.instance.media_player_new()
         self.__playSong(0)
 
+    def __findSong(self, song):
+        tmp=[z for z in self.__mp3s if re.search(r'{}'.format(song), z, re.IGNORECASE)]
+        if len(tmp):
+            self.player.stop()
+            self.__playSong(self.__mp3s.index(tmp[0]))
+        else:
+            print "Song not found"
+        
+
     def __readFiles(self): #pulls all songs from directory
-        self.mp3directory = sys.argv[1] if len(sys.argv) > 1 else "/home/{}/Desktop/".format(os.environ["USER"])
+        self.mp3directory = sys.argv[1] if len(sys.argv) > 1 else "/home/{}/Music/".format(os.environ["USER"])
         if not os.path.isdir(self.mp3directory):
             print "Specified directory does not exist"
             exit()
@@ -38,25 +49,28 @@ class commands(threading.Thread):
             self.mp3directory+="/"
         for (root, directories, files) in os.walk(os.path.abspath(self.mp3directory)):
             self.__mp3s=[file for file in files if re.search(r'.mp3', file)]
+            self.__mp3sPlayedIndexes=list()
              
     def __getSong(self): #pull song
         self.player.stop()
-        if len(self.__mp3s) <= 0:
-            self.__readFiles()
-            print len(self.__mp3s)
-        num=random.randint(0, len(self.__mp3s)-1) if self.__sessionAttributes['random'] else 0
+        generateNum = lambda : random.randint(0, len(self.__mp3s)-1) if self.__sessionAttributes['random'] else len(self.__mp3sPlayedIndexes)
+        if len(self.mp3directory) == len(self.__mp3s):
+            self.__mp3s.clear()
+        num = generateNum()
+        while num in self.__mp3sPlayedIndexes:
+            num = generateNum()  
         self.__playSong(num)
 
     def __playSong(self, index): #play song
         self.media = self.instance.media_new("{0}{1}".format(self.mp3directory, self.__mp3s[index]))
-        self.__mp3s.pop(index)
+        self.__mp3sPlayedIndexes.append(index)
         self.player.set_media(self.media)
         self.player.play()
     def run(self):
         while self.userInput.isAlive():
             self.getAction()
             if self.player.get_state() == vlc.State.Ended:
-                self.__getSong()
+                self.__playSong(self.__mp3sPlayedIndexes[-1]) if self.__sessionAttributes['loop'] else self.__getSong() 
             time.sleep(1)
 
     def getAction(self): #get user input
@@ -65,14 +79,14 @@ class commands(threading.Thread):
             inputAttr = [atrribute for atrribute in self.__sessionAttributes.keys() if re.search(r"{}".format(atrribute), input, re.IGNORECASE)]
             if len(input.split()) == 1 and len(inputAttr):
                 self.__sessionAttributes[inputAttr[0]]()
-            elif len(input.split()) == 2 and len(inputAttr):
+            elif len(input.split()) >= 2 and len(inputAttr):
                 if type(self.__sessionAttributes[inputAttr[0]]) is type(bool()):
                     self.__sessionAttributes[inputAttr[0]] = input.split()[-1]  
                 else:
-                    self.__sessionAttributes[inputAttr[0]](int(input.split()[-1]))
+                    self.__sessionAttributes[inputAttr[0]](str(input.split(' ', 1)[1]))
             else:
                 print "Invalid Input"
-            time.sleep(1)  
+            #time.sleep(1)  
 
 class userInput(threading.Thread):
     def getInputInput(self):
@@ -82,7 +96,7 @@ class userInput(threading.Thread):
                 break
             else:
                 inputs.put(input)
-                time.sleep(1)
+                #time.sleep(1)
     def run(self):
         tLock.acquire()
         self.getInputInput()
