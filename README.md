@@ -6,8 +6,8 @@
 
 ### Installation Steps
 1. Clone the repository onto local machine
-2. Sign up for a FREE [RapidAPI]("https://rapidapi.com") account and get the API key for the service.
-3. Download a geckodriver and ad blocker. As of now only works with [Firefox geckodriver]("https://github.com/mozilla/geckodriver/releases"). Additionally, all testing has been performed with [uBlock extension]("https://github.com/gorhill/uBlock/releases/download/1.32.1b0/uBlock0_1.32.1b0.firefox.signed.xpi").
+2. Sign up for a FREE [RapidAPI](https://rapidapi.com) account and get the API key for the service.
+3. Download a geckodriver and ad blocker. As of now only works with [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases). Additionally, all testing has been performed with [uBlock extension](https://github.com/gorhill/uBlock/releases/download/1.32.1b0/uBlock0_1.32.1b0.firefox.signed.xpi).
 4. Install python dependencies with `pip3 install -r requirements.txt`
 5. Run tool by running `python3 run.py` script with additional arguments to be discussed in a section below.
 
