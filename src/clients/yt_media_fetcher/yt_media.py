@@ -7,10 +7,13 @@ import os
 
 
 class YTMedia:
-
+    """Manages Selenium(Firefox webdriver) session for YT download.
+    """
+    # Selenium OPTIONS config
     OPTIONS = Options()
     OPTIONS.add_argument('--headless')
 
+    # Selenium preferences config for Firefox geckodriver
     PROFILE = webdriver.FirefoxProfile()
     PROFILE.set_preference('dom.popup_maximum', 0)
     PROFILE.set_preference('privacy.popups.showBrowserMessage', False)
@@ -25,20 +28,30 @@ class YTMedia:
         'browser.helperApps.neverAsk.openFile', 'audio/mpeg, video/mp4')
 
     def __init__(self):
-
+        """Constructor
+        """
         self._driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH,
-                                         firefox_profile=self.PROFILE)  # firefox_options=self.OPTIONS
+                                         firefox_profile=self.PROFILE) # firefox_options=self.OPTIONS
         self.__setup_extensions()
 
         self._ytmp3 = YTmp3(self._driver)
 
     def __setup_extensions(self):
-
+        """Setups extensions for geckodriver if present
+        """
         for extension in os.listdir(EXTENSIONS_DIR):
-            self._driver.install_addon(os.path.abspath(os.path.join(EXTENSIONS_DIR, extension)))
+            self._driver.install_addon(os.path.abspath(
+                os.path.join(EXTENSIONS_DIR, extension)))
 
     def download_entity(self, url):
+        """Downloads a YT entity
 
+        Args:
+            url (str): YT url to be downloaded
+
+        Returns:
+            str: Title of the video downloaded
+        """
         self._ytmp3.enter_yt_link(url)
         self._ytmp3.download_yt_entity()
 

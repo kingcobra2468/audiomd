@@ -33,4 +33,9 @@ The `config.py` file under `/src` stores global configuration details and consta
 ### CommandLine options for `run.py`
 Use only one or the two. File flag has dominance in the case of both flags being accidently used.
 - `-u/--url` URL for yt video to be downloaded. Flags could be repeated as internally a list is created of all the links
-- `-f/--file` File that holds onto all of the yt video links  
+- `-f/--file` File that holds onto all of the yt video links
+
+### Ongoing Improvements
+- Add support for inputting title into the script(url file/cli flag) since sometimes the YT title has words like "LYRICS" or "INSTRUMENTAL" which affect the result query of Deezer api.
+- Change Selenium logic such that selenium windows open only when worker launched
+- implement logic for headless webdrivers  

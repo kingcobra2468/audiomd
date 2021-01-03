@@ -3,7 +3,17 @@ import os
 
 
 def read_url_file(file_path):
+    """Parses a file containing urls and optional additional data
 
+    Args:
+        file_path (str): Path to file to be read
+
+    Raises:
+        ValueError: Raised if file does not exist
+
+    Returns:
+        list(str): List of urls 
+    """
     if not os.path.isfile(file_path):
         raise ValueError(f'URL File {file_path} doesnt exist.')
 
