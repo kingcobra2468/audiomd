@@ -1,23 +1,22 @@
 from clients.yt_media_fetcher.yt_media import YTMedia
 from clients.metadata_scrapper.deezer_scrapper import DeezerScrapper
-
-# CSV labels
-LABELS = ['file_name', 'artist', 'explicit', 'genre']
-
+from data_harvesting.data_config import LABELS
 
 class Record:
     """Dataset record for a new YT entity
     """
 
-    def __init__(self, url):
+    def __init__(self, url, deezer_title=None):
         """Constructor
 
         Args:
             url (str): YT url to be downloaded
+            base_title (str): Title to be used for Deezer API. Defaults to None
         """
         self._yt_media = YTMedia()
         self._deezer_scrapper = DeezerScrapper()
         self._url = url
+        self._deezer_title = deezer_title
 
     def get_meta_row(self):
         """Generates a metadata csv record for YT entity
@@ -27,7 +26,8 @@ class Record:
         """
         title = self._yt_media.download_entity(self._url).strip()
 
-        search_metadata = self._deezer_scrapper.search(title)
+        search_metadata = self._deezer_scrapper.search(
+            title if self._deezer_title is None else self._deezer_title)
         meta_csv_row = self.create_empty_row()
         meta_csv_row['file_name'] = title  # Populates file_name field
 

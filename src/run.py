@@ -14,15 +14,35 @@ def read_url_file(file_path):
     Returns:
         list(str): List of urls 
     """
+
     if not os.path.isfile(file_path):
         raise ValueError(f'URL File {file_path} doesnt exist.')
 
     with open(file_path, 'r') as fd:
 
-        urls = fd.readlines()
-        urls = [url.strip() for url in urls]
+        input_file_data = fd.readlines()
+        return input_file_data
 
-        return urls
+
+def preprocess_deezer_title(raw_urls):
+    """Preprocesses the optional Deezer title
+
+    Args:
+        raw_urls (list): Raw list of urls
+
+    Returns:
+        list(tuple): List of tuples with (url, deezer_title|None) 
+    """
+    url_input = []
+
+    for url_line in raw_urls:
+
+        if ',' in url_line:  # Deezer title exists
+            url_input.append(url_line.split(','))
+        else:  # Treat YT video title as title
+            url_input.append((url_line, None))
+
+    return url_input
 
 
 if __name__ == "__main__":
@@ -44,6 +64,7 @@ if __name__ == "__main__":
     else:
         urls = cli_data.urls
 
+    urls = preprocess_deezer_title(urls)
     print(urls)
     record_pool = RecordPool(urls)
     record_pool.start_job()

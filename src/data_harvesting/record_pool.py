@@ -1,5 +1,5 @@
 from data_harvesting.record import Record
-from data_harvesting.csv_adapter import CSVAdapter
+from data_harvesting.adapters.csv_adapter import CSVAdapter
 from config import MAX_WORKERS, CSV_FILE_NAME, CSV_FILE_PATH
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 class RecordPool:
     """Record pool wrapper for threaded execution of dataset generation
     """
+
     def __init__(self, url_list):
         """Constructor
 
@@ -22,7 +23,8 @@ class RecordPool:
         Args:
             url_list (list): List of all Urls
         """
-        self._records = [Record(url) for url in url_list]
+        self._records = [Record(url, deezer_title)
+                         for url, deezer_title in url_list]
 
     def start_job(self):
         """Start the Multithreaded job.
@@ -32,7 +34,7 @@ class RecordPool:
                 record.get_meta_row): record for record in self._records}
 
             for future in as_completed(future_records):
-                try: # if a successful completion of record data fetch
+                try:  # if a successful completion of record data fetch
                     self._csv_adapter.add_record(future.result())
                 except Exception as e:
                     print(str(e))

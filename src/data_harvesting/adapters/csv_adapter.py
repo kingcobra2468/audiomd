@@ -1,5 +1,5 @@
 from config import CSV_FILE_NAME, CSV_FILE_PATH
-from data_harvesting.record import LABELS
+from data_harvesting.data_config import LABELS
 import pandas as pd
 import os
 
