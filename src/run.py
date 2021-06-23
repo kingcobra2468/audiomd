@@ -3,16 +3,16 @@ import os
 
 
 def read_url_file(file_path):
-    """Parses a file containing urls and optional additional data
+    """Parses a file containing urls and optional additional data.
 
     Args:
-        file_path (str): Path to file to be read
+        file_path (str): Path to file to be read.
 
     Raises:
-        ValueError: Raised if file does not exist
+        ValueError: Raised if file does not exist.
 
     Returns:
-        list(str): List of urls 
+        list(str): List of urls.
     """
 
     if not os.path.isfile(file_path):
@@ -25,13 +25,13 @@ def read_url_file(file_path):
 
 
 def preprocess_deezer_title(raw_urls):
-    """Preprocesses the optional Deezer title
+    """Preprocesses the optional Deezer title.
 
     Args:
-        raw_urls (list): Raw list of urls
+        raw_urls (list): Raw list of urls.
 
     Returns:
-        list(tuple): List of tuples with (url, deezer_title|None) 
+        list(tuple): List of tuples with (url, deezer_title|None).
     """
     url_input = []
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         urls = cli_data.urls
 
     urls = preprocess_deezer_title(urls)
-    print(urls)
+
     record_pool = RecordPool(urls)
     record_pool.start_job()
     record_pool.dump_data()

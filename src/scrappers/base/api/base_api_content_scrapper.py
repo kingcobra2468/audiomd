@@ -1,24 +1,23 @@
 from abc import ABC, abstractmethod
-import os
 
 
-class BaseAPiContentScrapper(ABC):
-    """Base class for developing Selenium based content scrappers.
+class BaseAPIContentScrapper(ABC):
+    """Base class for developing API/library driven content scrappers.
     """
 
     def __init__(self):
-        """Constructor
+        """Constructor.
         """
         pass
-    
+
     @abstractmethod
     def download_entity(self, url):
-        """Downloads a YT entity
+        """Downloads a given YT entity from its url.
 
         Args:
-            url (str): YT url to be downloaded
+            url (str): The url of the YT entity to be downloaded.
 
         Returns:
-            str: Title of the video downloaded
+            str: Title of the entity that was downloaded.
         """
         pass

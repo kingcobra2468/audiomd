@@ -2,7 +2,7 @@ from clients.deezer_client import DeezerClient
 from scrappers.base.api.base_api_meta_scrapper import BaseAPIMetaScrapper
 
 class DeezerMetadataScrapper(BaseAPIMetaScrapper):
-    """Dataset record for a new YT entity
+    """Metascrapper using the Deezer API.
     """
     LABELS = ['artist', 'explicit', 'genre']
 
@@ -10,12 +10,11 @@ class DeezerMetadataScrapper(BaseAPIMetaScrapper):
         super().__init__(self.LABELS)
         self._deezer_client = DeezerClient()
 
-    #TODO: update this comment
     def get_meta_row(self, title):
-        """Generates a metadata csv record for YT entity
+        """Generates a metadata csv record for YT entity.
 
         Returns:
-            dict: Labeled CSV record
+            dict: Labeled CSV record.
         """
         search_metadata = self._deezer_client.search(title)
         meta_csv_row = self.create_empty_row()
@@ -39,12 +38,12 @@ class DeezerMetadataScrapper(BaseAPIMetaScrapper):
         return meta_csv_row
 
     def _parse_search_meta(self, metadata, total, meta_csv_row):
-        """Internal parsing of Deezer serch API metadata and record population
+        """Internal parsing of Deezer serch API metadata and record population.
 
         Args:
-            metadata (dict): Deezer JSON response for search query
-            total (int): Number of record responses
-            meta_csv_row (dict): Record for the CSV that is being generated
+            metadata (dict): Deezer JSON response for search query.
+            total (int): Number of record responses.
+            meta_csv_row (dict): Record for the CSV that is being generated.
         """
         if not total:
             return
@@ -53,11 +52,11 @@ class DeezerMetadataScrapper(BaseAPIMetaScrapper):
         meta_csv_row['explicit'] = metadata['explicit_lyrics']
 
     def _parse_album_meta(self, metadata, meta_csv_row):
-        """Internal parsing of Deezer Album metadata and record population
+        """Internal parsing of Deezer album metadata and record population.
 
         Args:
-            metadata (dict): Deezer JSON response for search query
-            meta_csv_row (dict): Record for the CSV that is being generated
+            metadata (dict): Deezer JSON response for search query.
+            meta_csv_row (dict): Record for the CSV that is being generated.
         """
         if 'error' in metadata.keys():  # if no record in api response simply return
             return
@@ -68,10 +67,10 @@ class DeezerMetadataScrapper(BaseAPIMetaScrapper):
             pass
 
     def _empty_if_value(self, value, expected_empty):
-        """Helper function to check if an API response is an alias to empty
+        """Helper function to check if an API response is an alias to empty.
 
         Args:
-            value (any): Actual value
+            value (any): The actual value.
             expected_empty (any): Expect value of an empty response value.
 
         Returns:
@@ -80,9 +79,9 @@ class DeezerMetadataScrapper(BaseAPIMetaScrapper):
         return '' if value == expected_empty else value
 
     def create_empty_row(self):
-        """Generates an empty CSV record.
+        """Generates an empty CSV record from the predefinied scrapper columns.
 
         Returns:
-            dict: [Empty dict with keys being all LABELS and values being ''
+            dict: Empty dict with keys being all LABELS and values being ''.
         """
         return {label: '' for label in self.LABELS}

@@ -5,23 +5,23 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 class RecordPool:
-    """Record pool wrapper for threaded execution of dataset generation
+    """Record pool wrapper for threaded execution of dataset generation.
     """
 
     def __init__(self, url_list):
-        """Constructor
+        """Constructor.
 
         Args:
-            url_list (list): List of urls
+            url_list (list): List of urls.
         """
         self._csv_adapter = CSVAdapter()
         self._create_records(url_list)
 
     def _create_records(self, url_list):
-        """Creates all of the record objects
+        """Creates all of the record objects.
 
         Args:
-            url_list (list): List of all Urls
+            url_list (list): List of all Urls.
         """
         self._records = [Record(url, deezer_title)
                          for url, deezer_title in url_list]
@@ -49,6 +49,6 @@ class RecordPool:
                     print(str(e))
 
     def dump_data(self):
-        """Wrapper for dumping record data into CSV
+        """Wrapper for dumping record data into CSV.
         """
         self._csv_adapter.dump_to_csv()

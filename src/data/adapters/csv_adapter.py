@@ -4,7 +4,8 @@ import os
 
 
 class CSVAdapter:
-    """CSV adapter for metadata persistance and easy access.
+    """CSV adapter for metadata persistance and easy access to the
+    existing dataset CSV.
     """
 
     def __init__(self):
@@ -28,10 +29,15 @@ class CSVAdapter:
         """
         df = pd.read_csv(filepath_or_buffer=self._complete_path)
         return df
-    #TODO: update comment
+
     def establish_df(self, labels):
         """Abstraction function for giving DataFrame back whether it
         is a fresh Dataframe or one that is loaded with existing CSV data.
+
+        Args:
+            labels (list(str)): The list of features/columns for the CSV. Will
+            only be applied if the CSV is yet to exist and needs to be generated
+            for the first time.
         """
         if self.check_csv_exists():  # load csv if exists
             self._df = self.load_existing_data()
@@ -47,6 +53,6 @@ class CSVAdapter:
         self._df = self._df.append(record, ignore_index=True)
 
     def dump_to_csv(self):
-        """Dumps csv into a file
+        """Dumps in-memory DataFrame into a CSV file.
         """
         self._df.to_csv(self._complete_path, index=False)

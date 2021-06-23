@@ -22,14 +22,14 @@ class BaseWebContentScrapper(ABC):
         'browser.helperApps.neverAsk.openFile', 'audio/mpeg, video/mp4')
 
     def __init__(self):
-        """Constructor
+        """Constructor.
         """
         self._driver = webdriver.Firefox(executable_path=GECKODRIVER_PATH,
                                          firefox_profile=self.PROFILE)
         self.__setup_extensions()
-        
+
     def __setup_extensions(self):
-        """Setups extensions for geckodriver if present
+        """Setups extensions for geckodriver if they are present.
         """
         for extension in os.listdir(EXTENSIONS_DIR):
             self._driver.install_addon(os.path.abspath(
@@ -37,12 +37,12 @@ class BaseWebContentScrapper(ABC):
 
     @abstractmethod
     def download_entity(self, url):
-        """Downloads a YT entity
+        """Downloads a given YT entity from its url.
 
         Args:
-            url (str): YT url to be downloaded
+            url (str): The url of the YT entity to be downloaded.
 
         Returns:
-            str: Title of the video downloaded
+            str: Title of the entity that was downloaded.
         """
         pass
