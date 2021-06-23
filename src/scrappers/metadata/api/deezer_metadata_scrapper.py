@@ -1,33 +1,23 @@
-from clients.yt_media_fetcher.yt_media import YTMedia
-from clients.metadata_scrapper.deezer_scrapper import DeezerScrapper
-from data_harvesting.data_config import LABELS
+from clients.deezer_client import DeezerClient
+from scrappers.base.api.base_api_meta_scrapper import BaseAPIMetaScrapper
 
-class Record:
+class DeezerMetadataScrapper(BaseAPIMetaScrapper):
     """Dataset record for a new YT entity
     """
+    LABELS = ['artist', 'explicit', 'genre']
 
-    def __init__(self, url, deezer_title=None):
-        """Constructor
+    def __init__(self):
+        super().__init__(self.LABELS)
+        self._deezer_client = DeezerClient()
 
-        Args:
-            url (str): YT url to be downloaded
-            base_title (str): Title to be used for Deezer API. Defaults to None
-        """
-        self._yt_media = YTMedia()
-        self._deezer_scrapper = DeezerScrapper()
-        self._url = url
-        self._deezer_title = deezer_title
-
-    def get_meta_row(self):
+    #TODO: update this comment
+    def get_meta_row(self, title):
         """Generates a metadata csv record for YT entity
 
         Returns:
             dict: Labeled CSV record
         """
-        title = self._yt_media.download_entity(self._url).strip()
-
-        search_metadata = self._deezer_scrapper.search(
-            title if self._deezer_title is None else self._deezer_title)
+        search_metadata = self._deezer_client.search(title)
         meta_csv_row = self.create_empty_row()
         meta_csv_row['file_name'] = title  # Populates file_name field
 
@@ -41,7 +31,7 @@ class Record:
         search_metadata = search_metadata['data'][0]
         record_id = search_metadata['id']
 
-        album_metadata = self._deezer_scrapper.album(record_id)
+        album_metadata = self._deezer_client.album(record_id)
 
         self._parse_search_meta(search_metadata, total, meta_csv_row)
         self._parse_album_meta(album_metadata, meta_csv_row)
@@ -95,12 +85,4 @@ class Record:
         Returns:
             dict: [Empty dict with keys being all LABELS and values being ''
         """
-        return {label: '' for label in LABELS}
-
-    def get_url(self):
-        """Getter for returning the the YT entity url that is being processed
-
-        Returns:
-            str: YT entity url
-        """
-        return self._url
+        return {label: '' for label in self.LABELS}

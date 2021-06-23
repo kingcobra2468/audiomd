@@ -1,8 +1,9 @@
-from clients.yt_media_fetcher.pages.base_page import BasePage
+from scrappers.base.web.pages.base_page import BasePage
 from config import DOWNLOAD_TYPE
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 
 
 class YTmp3(BasePage):
@@ -37,8 +38,12 @@ class YTmp3(BasePage):
     def download_yt_entity(self):
         """Performs a download of YT entity
         """
-        wait = WebDriverWait(self._driver, 20).until(
-            EC.visibility_of_element_located((By.ID, "buttons")))
+        try:
+            wait = WebDriverWait(self._driver, 5).until(
+                EC.visibility_of_element_located((By.ID, 'buttons')))
+        except TimeoutException:
+            print(f'Unable to download song.')
+            self.close()
 
         self._driver.find_element_by_id(
             'buttons').find_elements_by_tag_name('a')[0].click()

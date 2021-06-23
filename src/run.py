@@ -1,4 +1,4 @@
-from data_harvesting.record_pool import RecordPool
+from data.record_pool import RecordPool
 import os
 
 

@@ -2,7 +2,7 @@ from config import RAPIDAPI_KEY
 import requests
 
 
-class DeezerScrapper:
+class DeezerClient:
     """Scrapper wrapper for the Deezer API
     """
     # Paths for corresponding api's for various Deezer services
@@ -10,11 +10,11 @@ class DeezerScrapper:
     GENRE_API = 'https://deezerdevs-deezer.p.rapidapi.com/genre/'
     ALBUM_API = 'https://deezerdevs-deezer.p.rapidapi.com/album/'
 
-    def __init__(self):
-        """Constructor
-        """
+    # TODO: update comment
+    def __init__(self, rapidapi_key=RAPIDAPI_KEY):
+
         self._headers = {
-            'x-rapidapi-key': RAPIDAPI_KEY,
+            'x-rapidapi-key': rapidapi_key,
             'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
         }
 
