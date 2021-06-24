@@ -53,7 +53,7 @@ This scrapper is a selenium wrapper over ytmp3.cc website. Since this is a web-b
 ### **Metadata Scrappers**
 Metadata scrappers work by collecting additional metadata for a given youtube video by doing looked up based on the video title(unless overrided by the user).
 
-#### **YTmp3 Scrapper**
+#### **Deezer Scrapper**
 This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the generation of an API access key(read more on the config section).
 
 
