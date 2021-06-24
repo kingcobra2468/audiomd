@@ -13,7 +13,7 @@ If a selenium-based scrapper is configured, the following setup steps must be do
 1. Download a geckodriver and ad blocker. As of now only works with [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases).
 2. (Optional) Install extension such as [uBlock extension](https://github.com/gorhill/uBlock/releases/download/1.32.1b0/uBlock0_1.32.1b0.firefox.signed.xpi). *Note: given that many sites have pop-ups, it is best to do this step to avoid undefined behavior*.
 
-### *Setup for Deezer Metadata Scrapper**
+### **Setup for Deezer Metadata Scrapper**
 1. Sign up for a FREE [RapidAPI](https://rapidapi.com) account and get the API key for the service.
 2. Put the API key in its correct location in the dotenv file.
    
@@ -48,14 +48,13 @@ Content scrappers are intended at working with a Youtube video. The Youtube vide
 This scrapper is based on the youtube-dl project. The scrapper is an api-based scrapper and requires no addtional configuration by the user.
 
 #### **YTmp3 Scrapper**
-This scrapper is a selenium wrapper over ytmp3.cc website. Since this is a web-based scrapper, it will require Selenium to be configured (read more on the config section).
+This scrapper is a selenium wrapper over ytmp3.cc website. Since this is a web-based scrapper, it will require Selenium to be [configured](#setup-for-selenium-based-scrappers).
 
 ### **Metadata Scrappers**
 Metadata scrappers work by collecting additional metadata for a given youtube video by doing looked up based on the video title(unless overrided by the user).
 
 #### **Deezer Scrapper**
-This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the generation of an API access key(read more on the config section).
-
+This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the [generation of an API access key](#setup-for-deezer-metadata-scrapper).
 
 ## **CommandLine options for `run.py`**
 Use only one or the two. File flag has dominance in the case of both flags being accidently used.
