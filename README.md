@@ -1,10 +1,10 @@
 # YouTube MP3 Data Generation Tool 
 
-#### Tool for using Youtube videos for generating an audio dataset. Downloads youtube video using ytmp3 web service and extracts possible metadata using Deezer API. 
+#### Tool for generating an audio dataset for Youtube videos. Downloads Youtube videos using one of the available content scrappers and extracts possible metadata using the selected subset of metadata scrappers. 
 
 ## **Setup**
 Regardless of the content and metadata scrappers used, the following steps must be done.
-1. Install python dependencies with `pip3 install -r requirements.txt`
+1. Install python dependencies with `pip3 install -r requirements.txt`.
 2. Configure the content and metadata scrapper that will be used.
 3. Run tool by running `python3 run.py` script with additional arguments to be discussed in a section below.
 
@@ -45,18 +45,18 @@ Within AudioMD, there exists two type of scrappers: metadata and content.  Both 
 Content scrappers are intended at working with a Youtube video. The Youtube video will be download and put in the specified output directory on the local machine.
 
 #### **Youtube-dl Scrapper**
-This scrapper is based on the youtube-dl project. The scrapper is an api-based scrapper and requires no addtional configuration by the user.
+This scrapper is based on the youtube-dl project. The scrapper is an api-based scrapper and requires no addtional configuration by the user. This scrapper is could be included as **'youtube_dl'**.
 
 #### **YTmp3 Scrapper**
-This scrapper is a selenium wrapper over ytmp3.cc website. Since this is a web-based scrapper, it will require Selenium to be [configured](#setup-for-selenium-based-scrappers).
+This scrapper is a selenium wrapper over ytmp3.cc website. Since this is a web-based scrapper, it will require Selenium to be [configured](#setup-for-selenium-based-scrappers). This scrapper is could be included as **'ytmp3'**.
 
 ### **Metadata Scrappers**
 Metadata scrappers work by collecting additional metadata for a given youtube video by doing looked up based on the video title(unless overrided by the user).
 
 #### **Deezer Scrapper**
-This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the [generation of an API access key](#setup-for-deezer-metadata-scrapper).
+This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the [generation of an API access key](#setup-for-deezer-metadata-scrapper). This scrapper is could be included as **'deezer'**.
 
 ## **CommandLine options for `run.py`**
 Use only one or the two. File flag has dominance in the case of both flags being accidently used.
-- `-u/--url` URL for yt video to be downloaded. Flags could be repeated as internally a list is created of all the links. Additionally, an optional Deezer title could be provided through a **","** (comma) delimeter for improving query results for Deezer's search query.
-- `-f/--file` File that holds onto all of the yt video links. Additionally, on the same line as url link, an optional Deezer title could be provided through a **","** (comma) delimeter for improving query results for Deezer's search query. 
+- `-u/--url` URL for yt video to be downloaded. Flags could be repeated as internally a list is created of all the links. Additionally, an optional Deezer title could be provided through a **","** (comma) delimiter for improving query results for Deezer's search query.
+- `-f/--file` File that holds onto all of the yt video links. Additionally, on the same line as url link, an optional Deezer title could be provided through a **","** (comma) delimiter for improving query results for Deezer's search query. 
