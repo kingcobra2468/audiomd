@@ -10,7 +10,7 @@ class Record:
     with the chosen content scrapper and appropriate metadata will be generated from
     the configured metadata scrappers.
     """
-    NON_META_LABELS = ['file_name']
+    NON_META_LABELS = ['file_name', 'youtube_url']
 
     def __init__(self, url, custom_title=None, content_scrapper=CONTENT_SCRAPPER,
                  metadata_scrappers=METADATA_SCRAPPERS):
@@ -44,7 +44,7 @@ class Record:
             content_scrapper.lower())
         self._metadata_scrappers = [MetadataFactory.new_instance(metadata_scrapper.lower())
                                     for metadata_scrapper in metadata_scrappers]
-        self._url = url
+        self._url = url.strip()
         self._custom_title = custom_title
 
     def get_meta_row(self):
@@ -60,6 +60,7 @@ class Record:
         labels_freq = Counter(meta_csv_row.keys())
 
         meta_csv_row['file_name'] = title  # Populates file_name field
+        meta_csv_row['youtube_url'] = self._url
 
         # populate the empty row with the appropriate features
         for metadata_scrapper in self._metadata_scrappers:
