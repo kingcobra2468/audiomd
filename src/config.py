@@ -12,7 +12,7 @@ EXTENSIONS_DIR = './bin/selenium/extensions/'
 
 # YT Client
 DOWNLOAD_TYPE = 'MP3'  # either 'MP3' or 'MP4'
-OUTPUT_DIR = '~/Desktop'  # output directory
+OUTPUT_DIR = '~/Desktop/Songs/'  # output directory
 
 # METADATA SCRAPPER
 RAPIDAPI_KEY = os.environ.get("RAPIDAPI_KEY")

@@ -1,6 +1,6 @@
 # YouTube MP3 Data Generation Tool 
 
-#### Tool for generating an audio dataset for Youtube videos. Downloads Youtube videos using one of the available content scrappers and extracts possible metadata using the selected subset of metadata scrappers. 
+Tool for generating an audio dataset for Youtube videos. Downloads Youtube videos using one of the available content scrappers and extracts possible metadata using the selected subset of metadata scrappers. 
 
 ## **Setup**
 Regardless of the content and metadata scrappers used, the following steps must be done.
@@ -55,6 +55,24 @@ Metadata scrappers work by collecting additional metadata for a given youtube vi
 
 #### **Deezer Scrapper**
 This scrapper is a Deezer metadata wrapper which offers various metadata for a given song title. This scrapper requires the creation of a Rapid API account, and for the [generation of an API access key](#setup-for-deezer-metadata-scrapper). This scrapper is could be included as **'deezer'**.
+
+
+## Sample Dataset Schema
+With the content scrapper set to **youtube_dl** and the metadata scrapper set to **deezer**, the generated dataset consists of 5 columns labled: [artist, explicit, genre, file_name, youtube_url].
+
+- **artist(string)=** the artist name(from deezer).
+- **explicit(bool)=** whether the song is considered explicit(from deezer).
+- **genre(string)=** genre type of the song(from deezer).
+- **file_name(string)=** the name of the mp3 under the directory that was specified as **OUTPUT_DIR**.
+- **youtube_url(string)=** the original youtube url that was used as the content to be downloaded.
+
+### **Sample Data**
+```
+artist,explicit,genre,file_name,youtube_url
+John Coltrane,False,,They Say It's Wonderful,"https://www.youtube.com/watch?v=vBlSbNTqOFM"
+The Ink Spots,False,,To Each His Own (Karaoke Version),"https://www.youtube.com/watch?v=kruDTlJHmdo"
+Ella Fitzgerald,False,,You Won't Be Satisfied Until You Break My Heart,"https://www.youtube.com/watch?v=sEueAU1Hqfo"
+```
 
 ## **CommandLine options for `run.py`**
 Use only one or the two. File flag has dominance in the case of both flags being accidently used.
