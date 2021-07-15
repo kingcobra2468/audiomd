@@ -45,7 +45,7 @@ class Record:
         self._metadata_scrappers = [MetadataFactory.new_instance(metadata_scrapper.lower())
                                     for metadata_scrapper in metadata_scrappers]
         self._url = url.strip()
-        self._custom_title = custom_title
+        self._custom_title = custom_title.strip()
 
     def get_meta_row(self):
         """Generates a metadata csv record for a given YT entity.
@@ -54,7 +54,6 @@ class Record:
             dict: Labeled CSV record of metadata and other features.
         """
         title = self._content_scrapper.download_entity(self._url).strip()
-        title = title if self._custom_title is None else self._custom_title
 
         meta_csv_row = self.create_empty_row()
         labels_freq = Counter(meta_csv_row.keys())
