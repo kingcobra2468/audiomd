@@ -38,7 +38,7 @@ def preprocess_deezer_title(raw_urls):
     for url_line in raw_urls:
 
         if ',' in url_line:  # Deezer title exists
-            url_input.append(url_line.split(','))
+            url_input.append(url_line.split(',', maxsplit=1))
         else:  # Treat YT video title as title
             url_input.append((url_line, None))
 
