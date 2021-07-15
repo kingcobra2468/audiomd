@@ -37,6 +37,7 @@ The `config.py` file under `/src` stores global configuration details and consta
 - **CSV_FILE_NAME=** name of csv file for metadata of songs.
 - **CONTENT_SCRAPPER=** the content scrapper that will be used to fetch the content.
 - **METADATA_SCRAPPERS=** list of metadata scrappers that will be used for generating the csv.
+- **YDL_FILENAME=** set the filename if using youtube-dl content scrapper. Must follow the standard of youtube-dl.
 
 ## **Scrappers**
 Within AudioMD, there exists two type of scrappers: metadata and content.  Both content and metadata scrappers can exist under two forms: api and web. Web-based scrappers are built on top of Selenium, and will require Selenium to be configured on the machine. API based scrappers are driven by web APIs/libraries and might require API keys and/or the creation of accounts to work.
