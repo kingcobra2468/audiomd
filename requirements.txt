@@ -1,6 +1,6 @@
 selenium==3.141.0
 requests==2.24.0
 pandas==1.0.5
-numpy==1.18.5
+numpy==1.22.0
 python-dotenv==0.15.0
 youtube-dl==2021.6.6
